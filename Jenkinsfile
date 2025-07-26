@@ -1,11 +1,13 @@
-// pan-service/release/1.0/jenkins/Jenkinsfile
 pipeline {
     agent any
     stages {
-        stage('Delegate') {
+        stage('Run Central Pipeline') {
             steps {
-                git url: 'https://github.com/vinay2727/jenkins', branch: 'main'
-                build job: 'jenkins/Jenkinsfile'
+                git url: 'https://github.com/vinay2727/jenkins.git', branch: 'main'
+                script {
+                    def central = load 'centralPipeline.groovy'
+                    central()
+                }
             }
         }
     }
